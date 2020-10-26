@@ -1,32 +1,36 @@
 package eu.wodrobina;
 
-
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 public class BankerApplication {
 
-  public static void main(String[] args) throws Exception {
-    ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-    context.setContextPath("/");
+    public static final String DEFAULT_CONTEXT_PATH = "/";
 
-    Server jettyServer = new Server(8070);
-    jettyServer.setHandler(context);
+    public static void main(String[] args) throws Exception {
+        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        context.setContextPath(DEFAULT_CONTEXT_PATH);
 
-    ServletHolder jerseyServlet = context.addServlet(
-        org.glassfish.jersey.servlet.ServletContainer.class, "/*");
-    jerseyServlet.setInitOrder(0);
+        Server jettyServer = new Server(8070);
+        jettyServer.setHandler(context);
 
-    jerseyServlet.setInitParameter(
-        "jersey.config.server.provider.packages",
-        "eu.wodrobina");
+//    new ServletContainer(new AppConfig())
+        ServletHolder jerseyServlet = context.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/*");
+        jerseyServlet.setInitOrder(0);
 
-    try {
-      jettyServer.start();
-      jettyServer.join();
-    } finally {
-      jettyServer.destroy();
+        jerseyServlet.setInitParameter(
+                "jersey.config.server.provider.packages",
+                "eu.wodrobina");
+        jerseyServlet.setInitParameter("javax.ws.rs.Application",
+                "eu.wodrobina.AppConfig");
+        jerseyServlet.setInitParameter("com.sun.jersey.api.json.POJOMappingFeature",
+                "true");
+        try {
+            jettyServer.start();
+            jettyServer.join();
+        } finally {
+            jettyServer.destroy();
+        }
     }
-  }
 }

@@ -38,4 +38,19 @@ public class BankAccount {
         return closedTimestamp == null;
     }
 
+    public Instant getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+    public Instant getClosedTimestamp() {
+        return closedTimestamp;
+    }
+
+    public String getBankAccountNumber() {
+        return bankAccountNumber.getBankAccountNumber();
+    }
+
+    public List<AccountHistory> getAccountHistories() {
+        return List.copyOf(accountHistories);
+    }
 }
