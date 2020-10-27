@@ -15,17 +15,11 @@ public class BankerApplication {
         Server jettyServer = new Server(8070);
         jettyServer.setHandler(context);
 
-//    new ServletContainer(new AppConfig())
         ServletHolder jerseyServlet = context.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/*");
         jerseyServlet.setInitOrder(0);
 
-        jerseyServlet.setInitParameter(
-                "jersey.config.server.provider.packages",
-                "eu.wodrobina");
         jerseyServlet.setInitParameter("javax.ws.rs.Application",
                 "eu.wodrobina.AppConfig");
-        jerseyServlet.setInitParameter("com.sun.jersey.api.json.POJOMappingFeature",
-                "true");
         try {
             jettyServer.start();
             jettyServer.join();
