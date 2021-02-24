@@ -1,33 +1,33 @@
 package eu.wodrobina.account.model;
 
+import eu.wodrobina.account.model.events.CashFlow;
+import io.reactivex.Observable;
+
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.Collections;
-import java.util.List;
 
 public class BankAccount {
 
     private Instant creationTimestamp;
     private Instant closedTimestamp;
     private BankAccountNumber bankAccountNumber;
-    private List<AccountHistory> accountHistories;
+    private AccountHistory accountHistory;
 
-    private BankAccount(BankAccountNumber bankAccountNumber) {
+    private BankAccount(BankAccountNumber bankAccountNumber, AccountHistory accountHistory) {
         this.creationTimestamp = Instant.now();
         this.bankAccountNumber = bankAccountNumber;
-        this.accountHistories = Collections.emptyList();
+        this.accountHistory = accountHistory;
     }
 
     public static BankAccount open(BankAccountNumber bankAccountNumber) {
-        return new BankAccount(bankAccountNumber);
+        return new BankAccount(bankAccountNumber, new AccountHistory());
     }
 
-    public void deposit(BigDecimal amountToDeposit) {
-
+    public void deposit(Observable<CashFlow> depositEvent) {
     }
 
-    public void withdraw(BigDecimal amountToWithdraw) {
-
+    public CashFlow withdraw(BigDecimal amountToWithdraw) {
+        return new CashFlow(bankAccountNumber, amountToWithdraw, Instant.now());
     }
 
     public void close() {
@@ -50,7 +50,7 @@ public class BankAccount {
         return bankAccountNumber.getBankAccountNumber();
     }
 
-    public List<AccountHistory> getAccountHistories() {
-        return List.copyOf(accountHistories);
+    public BigDecimal currentBalance() {
+        return accountHistory.currentBalance();
     }
 }

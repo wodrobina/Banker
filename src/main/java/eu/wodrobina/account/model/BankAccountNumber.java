@@ -1,21 +1,22 @@
 package eu.wodrobina.account.model;
 
+import java.util.regex.Pattern;
+
 public class BankAccountNumber {
 
-    public static final int CONTROL_SUM_BEGIN = 0;
-    public static final int CONTROL_SUM_END = 1;
-    public static final int SORT_CODE_START = 2;
-    public static final int SORT_CODE_END = 10;
-    public static final int BANK_CODE_START = 11;
-    public static final int BANK_CODE_END = 26;
-    public static final int SIZE_OF_BANK_ACCOUNT_NUMBER = 26;
-    public static final String ONLY_DIGITS = "[0-9]+";
+    private static final int CONTROL_SUM_BEGIN = 0;
+    private static final int CONTROL_SUM_END = 1;
+    private static final int SORT_CODE_START = 2;
+    private static final int SORT_CODE_END = 10;
+    private static final int BANK_CODE_START = 11;
+    private static final int BANK_CODE_END = 26;
+    private static final int SIZE_OF_BANK_ACCOUNT_NUMBER = 26;
 
-    private String controlSum;
-    private String sortCode;
-    private String bankNumber;
+    private final String controlSum;
+    private final String sortCode;
+    private final String bankNumber;
 
-    private String bankAccountNumber;
+    private final String bankAccountNumber;
 
     public BankAccountNumber(String bankAccountNumber) {
         isValid(bankAccountNumber);
@@ -33,10 +34,14 @@ public class BankAccountNumber {
 
     private void isValid(String bankAccountNumber) {
         assert bankAccountNumber.length() == SIZE_OF_BANK_ACCOUNT_NUMBER;
-        assert bankAccountNumber.contains(ONLY_DIGITS);
     }
 
     public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
+
+    @Override
+    public String toString() {
         return bankAccountNumber;
     }
 }
