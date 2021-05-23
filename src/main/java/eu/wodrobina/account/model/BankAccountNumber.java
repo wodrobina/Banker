@@ -1,7 +1,5 @@
 package eu.wodrobina.account.model;
 
-import java.util.regex.Pattern;
-
 public class BankAccountNumber {
 
     private static final int CONTROL_SUM_BEGIN = 0;

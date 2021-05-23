@@ -1,6 +1,8 @@
 package eu.wodrobina.transfer;
 
-public interface TransferTask<T, U> {
+import eu.wodrobina.transfer.dto.MoneyTransfer;
+
+public interface TransferTask<T, U extends MoneyTransfer> {
     U perform(T source);
 
     Class<T> handles();

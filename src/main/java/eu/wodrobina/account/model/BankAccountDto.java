@@ -1,13 +1,12 @@
 package eu.wodrobina.account.model;
 
 import java.time.Instant;
-import java.util.List;
 
 public class BankAccountDto {
 
-    private Instant creationTimestamp;
-    private Instant closedTimestamp;
-    private String bankAccountNumber;
+    private final Instant creationTimestamp;
+    private final Instant closedTimestamp;
+    private final String bankAccountNumber;
 
     public BankAccountDto(final BankAccount bankAccount) {
         this.creationTimestamp = bankAccount.getCreationTimestamp();

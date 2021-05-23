@@ -1,8 +1,5 @@
 package eu.wodrobina.account.model;
 
-import eu.wodrobina.account.model.events.CashFlow;
-import io.reactivex.Observable;
-
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -23,11 +20,12 @@ public class BankAccount {
         return new BankAccount(bankAccountNumber, new AccountHistory());
     }
 
-    public void deposit(Observable<CashFlow> depositEvent) {
+    public BigDecimal deposit(BigDecimal amount) {
+        return accountHistory.deposit(amount);
     }
 
-    public CashFlow withdraw(BigDecimal amountToWithdraw) {
-        return new CashFlow(bankAccountNumber, amountToWithdraw, Instant.now());
+    public BigDecimal withdraw(BigDecimal amountToWithdraw) {
+        return accountHistory.withdraw(amountToWithdraw);
     }
 
     public void close() {

@@ -19,7 +19,7 @@ public class BankerApplication {
         jerseyServlet.setInitOrder(0);
 
         jerseyServlet.setInitParameter("javax.ws.rs.Application",
-                "eu.wodrobina.AppConfig");
+                "eu.wodrobina.AppCnfig");
         try {
             jettyServer.start();
             jettyServer.join();
