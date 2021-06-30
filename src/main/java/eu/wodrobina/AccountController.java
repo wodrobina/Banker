@@ -29,7 +29,7 @@ public class AccountController {
 //    @Produces(MediaType.APPLICATION_JSON)
     public Response createNewBankAccount() throws URISyntaxException {
 
-        final BankAccount openedAccount = BankAccount.open(bankAccountNumberGenerator.generate());
+        final BankAccount openedAccount = BankAccount.open(bankAccountNumberGenerator.generate(), null);
 
         return Response
 //                .created(new URI("wod"))
@@ -45,7 +45,7 @@ public class AccountController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAccount() {
 
-        final BankAccount openedAccount = BankAccount.open(bankAccountNumberGenerator.generate());
+        final BankAccount openedAccount = BankAccount.open(bankAccountNumberGenerator.generate(), null);
 
         return Response
                 .accepted()

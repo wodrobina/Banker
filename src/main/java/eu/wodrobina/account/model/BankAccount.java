@@ -1,5 +1,9 @@
 package eu.wodrobina.account.model;
 
+import eu.wodrobina.account.model.operations.AccountHistory;
+import eu.wodrobina.account.model.operations.dto.DepositOperationDto;
+import eu.wodrobina.account.model.operations.dto.WithdrawOperationDto;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -16,16 +20,18 @@ public class BankAccount {
         this.accountHistory = accountHistory;
     }
 
-    public static BankAccount open(BankAccountNumber bankAccountNumber) {
-        return new BankAccount(bankAccountNumber, new AccountHistory());
+    public static BankAccount open(BankAccountNumber bankAccountNumber, AccountHistory accountHistory) {
+        return new BankAccount(bankAccountNumber, accountHistory);
     }
 
-    public BigDecimal deposit(BigDecimal amount) {
-        return accountHistory.deposit(amount);
+    public BigDecimal deposit(DepositOperationDto toDeposit) {
+        accountHistory.accept(toDeposit);
+        return accountHistory.currentBalance();
     }
 
-    public BigDecimal withdraw(BigDecimal amountToWithdraw) {
-        return accountHistory.withdraw(amountToWithdraw);
+    public BigDecimal withdraw(WithdrawOperationDto toWithdraw) {
+        accountHistory.accept(toWithdraw);
+        return accountHistory.currentBalance();
     }
 
     public void close() {
